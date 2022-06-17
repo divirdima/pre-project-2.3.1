@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<table border="1" width="300" height="40" align="center">
+	<tr>
+		<td>Model</td><td>Year</td><td>Country</td>
+	</tr>
+	<tr th:each="car : ${cars}">
+		<td th:text="${car.getModel()}"/><td th:text="${car.getYear()}"/><td th:text="${car.getCountry()}"/>
+	</tr>
+</table>
+
+	<a href="?count=1">one</a>
+	<a href="?count=2">two</a>
+	<a href="?count=3">three</a>
+	<a href="?count=4">four</a>
+	<a href="?count=5">five</a>
+
+</body>
+</html>
