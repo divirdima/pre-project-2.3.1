@@ -13,8 +13,7 @@ public class HelloController {
 	@GetMapping(value = "/")
 	public String printWelcome(ModelMap model) {
 		List<String> messages = new ArrayList<>();
-		messages.add("Hi bro!");
-		messages.add(new java.util.Date().toString());
+		messages.add("Hi it's a 2.3.1 pre project!");
 		model.addAttribute("messages", messages);
 		return "index";
 	}
