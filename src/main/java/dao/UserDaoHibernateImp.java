@@ -2,11 +2,9 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,33 +15,32 @@ import model.User;
 @Repository
 @Transactional
 public class UserDaoHibernateImp implements UserDao{
-
-	@Autowired
-	SessionFactory sessionFactory;
+	
+	@PersistenceContext
+	EntityManager entityManager;
 	
 	@Override
 	public User getUserById(int id) {
-		TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User where id = :idParam");
+		Query query = entityManager.createQuery("from User where id = :idParam");
 		query.setParameter("idParam", id);
-		return query.getSingleResult();
+		return (User)query.getSingleResult();
 	}
 
 	@Override
 	public void save(User user) {
-		sessionFactory.getCurrentSession().save(user);
-		
+		entityManager.persist(user);
 	}
 
 	@Override
 	public void remove(int id) {
-		TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("delete User where id = :idParam");
+		Query query = entityManager.createQuery("delete User where id = :idParam");
 		query.setParameter("idParam", id);		
 		query.executeUpdate();
 	}
 
 	@Override
 	public void update(int id, User user) {
-		TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("update User "
+		Query query = entityManager.createQuery("update User "
 				+ "set name = :namePar, wallet = :walletPar where id = :idParam");
 		query.setParameter("namePar", user.getName());
 		query.setParameter("walletPar", user.getWallet());
@@ -54,7 +51,7 @@ public class UserDaoHibernateImp implements UserDao{
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<User> getAllUsers() {
-		TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+		Query query = entityManager.createQuery("from User");
 	    return query.getResultList();
 	}
 
