@@ -37,9 +37,12 @@ public class UserDaoListImp implements UserDao{
 
 	@Override
 	public void update(int id, User user) {
-		User toUpdate = getUserById(id);
-		toUpdate.setName(user.getName());
-		toUpdate.setWallet(user.getWallet());
+		users.set(id-1, user);
+	}
+
+	@Override
+	public void remove(int id) {
+		users.removeIf(p -> p.getId() == id);
 	}
 	
 	
